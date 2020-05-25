@@ -7,14 +7,19 @@ public class Rocketship : MonoBehaviour
 {
     // Start is called before the first frame update
     Rigidbody rigidbody;
+    AudioSource thrust_audio;
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
+        thrust_audio = GetComponent<AudioSource>();
+        
     }
 
     void Update()
     {
         ProcessInput();
+        
     }
 
     private void ProcessInput()
@@ -22,7 +27,15 @@ public class Rocketship : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             rigidbody.AddRelativeForce(Vector3.up);
+            if (!thrust_audio.isPlaying)
+                thrust_audio.Play();
         }
+        else
+        {
+            thrust_audio.Stop();
+        }
+        
+        
         if (Input.GetKey(KeyCode.A))
         {
             transform.Rotate(Vector3.forward);
@@ -31,5 +44,6 @@ public class Rocketship : MonoBehaviour
         {
             transform.Rotate(-Vector3.forward);
         }
+        
     }
 }
