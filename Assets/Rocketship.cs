@@ -8,6 +8,9 @@ public class Rocketship : MonoBehaviour
     // Start is called before the first frame update
     Rigidbody rigidbody;
     AudioSource thrust_audio;
+    [SerializeField] float rcsTrust = 80f;
+    [SerializeField] float mainTrust = 50f;
+
 
     void Start()
     {
@@ -18,15 +21,47 @@ public class Rocketship : MonoBehaviour
 
     void Update()
     {
-        ProcessInput();
-        
+        Thrust();
+        Rotate();
     }
 
-    private void ProcessInput()
+
+    void OnCollisionEnter(Collision collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "Friendly":
+                break;
+            default :
+                print("DEATH!");
+                break;
+        }
+    }
+
+    private void Rotate()
+    {
+        rigidbody.freezeRotation = true;
+        float RotationForFrame = rcsTrust * Time.deltaTime;
+        if (Input.GetKey(KeyCode.A))
+        {
+           
+            transform.Rotate(Vector3.forward* RotationForFrame);
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(-Vector3.forward * RotationForFrame);
+        }
+
+        rigidbody.freezeRotation = false;
+
+    }
+
+    private void Thrust()
     {
         if (Input.GetKey(KeyCode.Space))
         {
-            rigidbody.AddRelativeForce(Vector3.up);
+            float thrustForFrame = mainTrust * Time.deltaTime;
+            rigidbody.AddRelativeForce(Vector3.up * thrustForFrame);
             if (!thrust_audio.isPlaying)
                 thrust_audio.Play();
         }
@@ -34,16 +69,5 @@ public class Rocketship : MonoBehaviour
         {
             thrust_audio.Stop();
         }
-        
-        
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(Vector3.forward);
-        }
-        else if(Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(-Vector3.forward);
-        }
-        
     }
 }
