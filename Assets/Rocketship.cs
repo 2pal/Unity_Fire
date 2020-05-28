@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Rocketship : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class Rocketship : MonoBehaviour
     AudioSource thrust_audio;
     [SerializeField] float rcsTrust = 80f;
     [SerializeField] float mainTrust = 50f;
+    enum State {Alive, Dying, Transcending };
+    State state = State.Alive;
 
 
     void Start()
@@ -21,21 +24,48 @@ public class Rocketship : MonoBehaviour
 
     void Update()
     {
-        Thrust();
-        Rotate();
+        if (state == State.Alive)
+        {
+            Thrust();
+            Rotate();
+        }
+        else if(state == State.Dying)
+        {
+            thrust_audio.Stop();
+        }
     }
 
 
     void OnCollisionEnter(Collision collision)
     {
+        if (state != State.Alive)
+        {
+            return;
+        }
         switch (collision.gameObject.tag)
         {
             case "Friendly":
                 break;
-            default :
-                print("DEATH!");
+            case "Finish":
+                state = State.Transcending;
+                Invoke("NextScene", 1f);
+                break;
+            default:
+                state = State.Dying;
+                Invoke("GoFirstScene", 1f);
                 break;
         }
+    }
+
+    private void GoFirstScene()
+    {
+        state = State.Alive;
+        SceneManager.LoadScene(0);
+    }
+
+    private void NextScene()
+    {
+        SceneManager.LoadScene(1);
     }
 
     private void Rotate()
