@@ -1903,11 +1903,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rocketship
       objectReference: {fileID: 0}
-    - target: {fileID: 3138185200498884069, guid: c3d5037ec45e09549bc418e8d5f423e2,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e9bf3329565311c458cc00395c9eb926, type: 2}
     - target: {fileID: 3138185201949499815, guid: c3d5037ec45e09549bc418e8d5f423e2,
         type: 3}
       propertyPath: m_LocalPosition.x
