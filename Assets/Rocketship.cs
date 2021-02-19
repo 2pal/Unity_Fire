@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class Rocketship : MonoBehaviour
 {
-    [SerializeField] float rcsThrust = 100f;
-    [SerializeField] float mainThrust = 100f;
+    [SerializeField] float rcsThrust = 80;
+    [SerializeField] float mainThrust = 50;
 
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip success;
