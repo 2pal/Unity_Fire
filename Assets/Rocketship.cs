@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+
 
 public class Rocketship : MonoBehaviour
 {
@@ -35,8 +35,17 @@ public class Rocketship : MonoBehaviour
     {
         if (state == State.Alive)
         {
+            
             RespondToThrustInput();
             RespondToRotateInput();
+        }
+        if (Debug.isDebugBuild)
+        {
+            if (Input.GetKey(KeyCode.L))
+            {
+                LoadNextLevel();
+                return;
+            }
         }
     }
 

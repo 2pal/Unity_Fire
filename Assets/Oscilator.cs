@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
+
 
 public class Oscilator : MonoBehaviour
 {
